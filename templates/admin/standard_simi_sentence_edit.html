@@ -1,0 +1,55 @@
+{% extends 'admin/base_standard.html' %}
+{% block style %}
+    <style>
+       #simi{
+        width: 60%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        }
+    </style>
+{% endblock %}
+
+<!--path-->
+{% block path %}
+<a href="{{url_for('admin.standard_sentence_list')}}">home</a> ><a href="{{url_for('admin.standard_simi_list')}}?word={{data.sentence}}">相似句 </a> > <a href="#">修改</a>
+{% endblock %}
+<!--path-->
+
+<!--content-->
+{% block content %}
+     <span style="font-family: 微软雅黑; font-size: 18px">修改相似句</span>
+    <br>
+    <br>
+    <input type="text" style="display: none" value="{{data.oldsimi}}" id="old_simi">
+    <input type="text" style="display: none" value="{{data.sentence}}" id="sentence">
+    <p><span style="font-size: 16px;font-family: '微软雅黑 Light'">相似句:&nbsp;&nbsp;&nbsp;&nbsp;</span><input type="text" id="simi" value="{{data.oldsimi}}"></p>
+
+    <p><button id="edit" class="btn btn-primary">修改</button></p>
+{% endblock %}
+<!--content-->
+{% block script %}
+<script>
+    $('#edit').click(function () {
+        var url = "{{url_for('admin.simi_edit')}}";
+        var simi = $('#simi').val();
+        var old_simi = $('#old_simi').val();
+        var sentence = $('#sentence').val();
+        $.ajax({
+            url: url,
+            data:{'simi': simi, 'old_simi': old_simi, "sentence": sentence},
+            type: "POST",
+            success:function (data) {
+                alert(data['msg'])
+            }
+        })
+
+    })
+</script>
+{% endblock %}

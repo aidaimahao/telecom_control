@@ -1,0 +1,55 @@
+{% extends 'admin/base_standard.html' %}
+{% block style %}
+    <style>
+        #sentence{
+        width: 60%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        }
+    </style>
+{% endblock %}
+
+<!--path-->
+{% block path %}
+<a href="{{url_for('admin.standard_sentence_list')}}">home</a> > <a href="#">修改</a>
+{% endblock %}
+<!--path-->
+
+<!--content-->
+{% block content %}
+     <span style="font-size: 22px;font-family: 微软雅黑">修改规则用语</span>
+<br>
+<br>
+    <input type="text" style="display: none" value="{{data}}" id="old_sentence">
+    <p><span style="font-size: 18px;font-family: 微软雅黑">规则用语:&nbsp;&nbsp;&nbsp;&nbsp;</span><input type="text" id="sentence" value="{{data}}"></p>
+
+    <p><button id="edit" class="btn btn-primary">修改</button></p>
+{% endblock %}
+<!--content-->
+{% block script %}
+<script>
+    $('#edit').click(function () {
+        var url = "{{url_for('admin.sentence_edit')}}";
+        var sentence = $('#sentence').val();
+        var old_sentence = $('#old_sentence').val();
+        $.ajax({
+            url: url,
+            data:{'sentence': sentence, 'old_sentence': old_sentence},
+            type: "POST",
+            success:function (data) {
+                if(data['state'] == 'fail'){
+                        alert(data['msg']);
+                }
+            }
+        })
+
+    })
+</script>
+{% endblock %}

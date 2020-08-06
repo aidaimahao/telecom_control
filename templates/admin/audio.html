@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>语音质检</title>
+    <link rel="shortcut icon" href="{{ url_for('static',filename='base/images/logo.png')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='mystyle.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='base/css/bootstrap.min.css')}}">
+    <script charset="utf-8" src="https://map.qq.com/api/gljs?v=1.exp&key=GX6BZ-S7EHX-QUG4I-7DOIO-6GSJV-AJBSP"></script>
+    <style>
+
+.popup {
+    padding: 24px;
+    overflow: hidden;
+}
+.title {
+    text-align:center;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 1;
+    color: #333333;
+    margin-top: 24px;
+}
+.audio {
+    margin-top: 24px;
+    height: 40px;
+    text-align: center;
+}
+.audio audio {
+    width: 480px;
+    height: 40px;
+}
+.textinfobox {
+    width: 600px;
+    height: 264px;
+    overflow: auto;
+    margin: 24px 24px 0;
+}
+.textinfoTitle {
+    display: flex;
+    padding: 0 24px;
+}
+.textinfoTitle span {
+    flex: 1;
+    font-size: 14px;
+    color: #333333;
+    font-weight: bold;
+}
+.textinfoTitle span:last-child {
+    text-align: center;
+}
+.textinfobox p:nth-child(1) {
+    margin-top: 0;
+}
+.robot + .robot {
+    margin-top: 0;
+}
+.robot span {
+    display: inline-block;
+    max-width: 50%;
+    color: #666666;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+}
+.robot span.active {
+    color: green;
+}
+.user + .user {
+    margin-top: 0;
+}
+.user span {
+    display: inline-block;
+    max-width: 50%;
+    color: #666666;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+}
+.user span.active {
+    color: green;
+}
+.nodelist span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80px;
+    color: #666666;
+    font-size: 12px;
+    font-weight: 400;
+}
+.nodelist .nodelistbtn {
+    width: 560px;
+    height: 74px;
+    padding-left: 80px;
+    overflow: hidden;
+}
+.nodelist .nodelistbtn div {
+    height: 100%;
+    overflow: auto;
+}
+.nodelist .nodelistbtn div button {
+    margin-right: 12px;
+    margin-bottom: 12px;
+}
+.alphbox .active {
+    color: #55d1ff;
+    transform: scale(1.5);
+    transition: all .5s;
+}
+.btnbox button{
+    margin-left: 12px;
+}
+.rate {
+    margin-left: 170px;
+}
+.check_total{
+    margin-left: 86px;
+}
+.rate span {
+    color: #333333;
+    font-size: 12px;
+    font-weight: 400;
+}
+.intention label {
+    color: #55d1ff;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 6px;
+}
+.remarks {
+    margin-top: 88px;
+    margin-left: 24px;
+    width: 640px;
+}
+.remarks span {
+    color: #666666;
+    font-size: 12px;
+    font-weight: 400;
+}
+.remarks input {
+    color: #666666;
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 36px;
+    width: 512px;
+}
+.textinfobox1 .call_id {
+    margin-left: 24px;
+    font-size: 14px;
+    color: red;
+    font-weight: bold;
+}
+.textinfoTitle1 span {
+    font-size: 14px;
+    color: #333333;
+    font-weight: bold;
+}
+.textinfoTitle1 span:nth-child(1) {
+    flex: 2;
+}
+.textinfoTitle1 span:nth-child(2) {
+    flex: 2;
+}
+.textinfoTitle1 span:nth-child(3) {
+    flex: 1;
+}
+.textinfoTitle1 span:nth-child(4) {
+    flex: 4;
+}
+.textinfo1 {
+    height: 224px;
+    padding: 0 0 0 24px;
+    overflow: auto;
+}
+.textinfo1 p {
+    display: flex;
+    height: 30px;
+    line-height: 30px;
+}
+.textinfo1 p:nth-child(odd) {
+    background-color: #f7f7f7;
+}
+.textinfo1 p span {
+    font-size: 12px;
+    color: #666666;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.textinfo1 p span:nth-child(1) {
+    flex: 2;
+}
+.textinfo1 p span:nth-child(2) {
+    flex: 2;
+}
+.textinfo1 p span:nth-child(3) {
+    flex: 1;
+}
+.textinfo1 p span:nth-child(4) {
+    flex: 4;
+}
+.check_result{
+    margin-top: 20px;
+    margin-left: 24px;
+}
+.audio_text{
+    background-color: gainsboro;
+}
+.audio_text p {
+    margin-left: 10px;
+}
+.machine_judge_reason{
+    display: inline-block;
+    margin-left: 10px;
+    color: red;
+}
+.map_title{
+    display: inline-block;
+    margin-left: 10px;
+    font-family: 微软雅黑;
+    font-size: 18px;
+}
+#allmap{
+    margin-top: 30px;
+    margin-left: 30px;
+}
+.msg{
+     line-height: 100%;
+}
+</style>
+</head>
+<body>
+<div class="container" style="border: 1px silver solid">
+    <div style="width: auto; height: 50px;">
+        <span style="display: inline-block; width: auto; height: 50px; text-align:center;background-color: rosybrown ;margin-top: 5px; font-family: 微软雅黑; font-size: 28px">{{ data.nickname }}</span>
+    </div>
+    <table class="table">
+        <tr>
+            <td>
+                <table class="table table-bordered msg" border="0" cellpadding="0" cellspacing="0"  >
+                    <tr><td>装维人员姓名</td><td> {{data.user_obj.nickname}}</td></tr>
+                    <tr><td>装维人员工号</td><td> {{data.user_obj.job_number}}</td></tr>
+                    <tr><td>服务时间</td><td> {{data.sign_obj.time}}</td></tr>
+                    <tr><td>装维人员手机号</td><td> {{data.user_obj.phone_number}}</td></tr>
+                    <tr><td>服务类型</td><td> {{data.sign_obj.info1}}</td></tr>
+                    <tr><td>{{data.sign_obj.info2}}</td><td> {{data.sign_obj.info3}}</td></tr>
+                    <tr><td>现场照片</td><td style="text-align: center"><img style="width: 100px; height: 100px; margin-left: 20px;'" src="{{data.photo_path}}" onerror="this.src='/static/admin/img/nohead.jpg'" alt=""></td></tr>
+
+                </table>
+            </td>
+            <td width="600px" rowspan="2">
+                <p data-v-17036d44="" class="title">现场服务录音</p>
+                <table>
+        <tr>
+            <td>
+                <span data-v-17036d44="" class="rate"><span style="font-size: 20px" data-v-17036d44="">倍速：</span>
+                <select data-v-17036d44="" id="select" onchange="changeRate()">
+                <option data-v-17036d44="" value="1" selected="selected">1</option>
+                <option data-v-17036d44="" value="1.5">1.5</option>
+                <option data-v-17036d44="" value="2">2</option>
+                </select>
+                </span>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </table>
+
+        <div data-v-17036d44="" class="audio">
+            <audio data-v-17036d44="" controls="controls" id="audio"
+       src="{{data.audio_path}}">
+    您的浏览器不支持音频播放
+</audio>
+        </div>
+        <div data-v-17036d44="" class="textinfobox">
+        <p data-v-17036d44="" style="text-align: center" class="textinfoTitle"><span data-v-17036d44="">录音转写质检</span></p>
+        <table style="width: 600px; height: 264px;">
+            <thead>
+                <td style="text-align: center; font-family: 微软雅黑; color: gray">工作人员</td>
+                <td style="text-align: center; font-family: 微软雅黑; color: silver">客户</td>
+            </thead>
+            <tr>
+                <td class="audio_text" width="240px">
+                    {% for item in data.audio_text.0 %}
+                        <p class="">{{item}}</p>
+                    {% endfor %}
+                </td>
+                <td class="audio_text" width="240"></td>
+            </tr>
+        </table>
+
+
+
+    </div>
+                <div data-v-17036d44="" class="check_result">
+                    <p>机器质检结果：
+                        <span class="machine_judge">
+                            {% if machine_judge == 1 %}
+                            <span style="color: green">通过</span>
+                            {% else %}
+                            <span style="color: red">不通过</span>
+                            {% endif %}
+
+                        </span>
+                        {% if data.machine_judge != 1%}
+                        <span class="machine_judge_reason">
+                            不通过原因：{{data.machine_judge_reason}}
+                        </span>
+                        {% endif %}
+
+                    </p>
+                    <p><span><a target="_blank" href="{{url_for('admin.standard_sentence_list')}}">质检标准</a></span></p>
+                    <div class="user_check">
+                        <p>管理员质检结果：</p>
+                        <div class="check_total">
+
+                            <div class="check_image">
+                                照片比对：
+                                {% if data.match_image==1%}
+                                    通过：<input type="radio" name="match-pic" value="1" checked>
+                                    不通过：<input type="radio" name="match-pic" value="0">
+                                {% elif data.match_image==0 %}
+                                    通过：<input type="radio" name="match-pic" value="1">
+                                    不通过：<input type="radio" name="match-pic" value="0" checked>
+                                {% else %}
+                                    通过：<input type="radio" name="match-pic" value="1">
+                                    不通过：<input type="radio" name="match-pic" value="0">
+                                {% endif %}
+                            </div>
+
+                            <div class="check_location">
+                                地理比对：
+                                {% if data.match_location ==1%}
+                                    通过：<input type="radio" name="match-location" value="1" checked>
+                                    不通过：<input type="radio" name="match-location" value="0">
+                                {% elif data.match_location ==0 %}
+                                    通过：<input type="radio" name="match-location" value="1">
+                                    不通过：<input type="radio" name="match-location" value="0" checked>
+                                {% else %}
+                                    通过：<input type="radio" name="match-location" value="1">
+                                    不通过：<input type="radio" name="match-location" value="0">
+                                {% endif %}
+                            </div>
+
+                            <div class="check_audio">
+                                录音审核：
+                                {% if data.match_audio==1%}
+                                    通过：<input type="radio" name="match-audio" value="1" checked>
+                                    不通过：<input type="radio" name="match-audio" value="0">
+                                {% elif data.match_audio==0 %}
+                                    通过：<input type="radio" name="match-audio" value="1">
+                                    不通过：<input type="radio" name="match-audio" value="0" checked>
+                                {% else %}
+                                    通过：<input type="radio" name="match-audio" value="1">
+                                    不通过：<input type="radio" name="match-audio" value="0">
+                                {% endif %}
+                            </div>
+
+                        </div>
+
+                    </div>
+                    
+                </div>
+                <div data-v-17036d44="" class="remarks"><span data-v-17036d44="">录音备注</span><input data-v-17036d44="" type="text" id="audio-note" value="{% if data.audio_note == None%} {% else %}{{data.audio_note}} {% endif %}">
+                    <input type="text" style="display: none" id="openid" name="openid" value="{{data.openid}}">
+                    <input type="text" style="display: none" id="signid" name="signid" value="{{data.signid}}">
+                </div>
+                <div data-v-17036d44="" style="text-align: center; margin-top: 20px;">
+                        <a class="btn btn-success" href="" id="confirm">确定 </a>
+                        <a class="btn btn-warning" href="javascript:window.opener=null;window.open('','_self');window.close();">取消</a>
+                </div>
+                <div class="el-loading-mask" style="background-color: rgba(0, 0, 0, 0.7); display: none;">
+                    <div class="el-loading-spinner"><i class="el-icon-loading"></i>
+                        <p class="el-loading-text">加载中，请稍后...</p></div>
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+
+            <td style="text-align: center;"><span class="map_title">打卡位置：</span><div id="allmap" style="width: 300px; height: 300px;left: 30px; border: 1px solid ghostwhite"></div></td>
+        </tr>
+    </table>
+
+
+</div>
+
+<script src="{{url_for('static', filename='base/js/jquery.min.js')}}"></script>
+<script>
+    const audio = document.getElementById('audio');
+    const select = document.getElementById('select');
+
+    // change rate ...
+    function changeRate() {
+        audio.playbackRate = select.options[select.selectedIndex].value;
+    }
+
+     $('#confirm').click(function () {
+         var url = "{{url_for('admin.submit_note')}}";
+         var note = $('#audio-note').val();
+         var openid = $('#openid').val();
+         var signid = $('#signid').val();
+         var match_image = $('input[name="match-pic"]:checked').val();
+         var match_location = $('input[name="match-location"]:checked').val();
+         var match_audio = $('input[name="match-audio"]:checked').val();
+         console.log(note)
+         $.ajax({
+             url: url,
+             type: "POST",
+             data: {
+                 "note": note,
+                 'openid': openid,
+                 'signid':signid,
+                 'match_image': match_image,
+                 'match_location': match_location,
+                 'match_audio': match_audio
+             },
+             success: function (result) {
+                 console.log(result);
+                 if (result.state == 'success') {
+                     console.log("success");
+                     alert('修改成功');
+                     location.reload();
+                 } else {
+                     console.log('fail');
+                     alert('success');
+                 }
+
+
+             },
+             error: function (msg) {
+                 console.log("error:", msg)
+             }
+         })
+     })
+
+    // GL版命名空间为BMapGL
+    // 按住鼠标右键，修改倾斜角和角度
+    var long = '{{data.sign_obj.longitude}}';
+    var lat = '{{data.sign_obj.latitude}}';
+    var center = new TMap.LatLng(lat, long);//设置中心点坐标
+        //初始化地图
+        var map = new TMap.Map("allmap", {
+            center: center
+        });
+
+        //初始化marker
+        var marker = new TMap.MultiMarker({
+            id: "marker-layer", //图层id
+            map: map,
+            styles: { //点标注的相关样式
+                "marker": new TMap.MarkerStyle({
+                    "width": 25,
+                    "height": 35,
+                    "anchor": { x: 16, y: 32 },
+                    "src": "https://mapapi.qq.com/web/lbs/javascriptGL/demo/img/markerDefault.png"
+                })
+            },
+            geometries: [{ //点标注数据数组
+                "id": "demo",
+                "styleId": "marker",
+                "position": new TMap.LatLng(lat, long),
+                "properties": {
+                    "title": "marker"
+                }
+            }]
+        });
+
+
+
+</script>
+</body>
+</html>

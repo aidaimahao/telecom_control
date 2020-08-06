@@ -1,0 +1,60 @@
+{% extends 'admin/base_standard.html' %}
+{% block style %}
+    <style>
+        .th{
+            font-size: 20px;
+            font-family: 微软雅黑;
+        }
+        .sentence{
+            font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+            color: #447e9b;
+        }
+        .add{
+            display: inline-block;
+            margin-right: 50px;
+        }
+    </style>
+{% endblock %}
+
+<!--path-->
+{% block path %}
+<a href="{{url_for('admin.standard_sentence_list')}}">home</a>
+{% endblock %}
+<!--path-->
+
+<!--content-->
+{% block content %}
+{% for msg in get_flashed_messages(category_filter=['ok']) %}
+    <div class="alert alert-success alert-dismissible">
+        <h4><i class="icon fa fa-check"></i> 操作成功!</h4>
+        {{ msg }}
+    </div>
+{% endfor %}
+    <table class="table table-striped">
+        <tr>
+            <td><span style="font-size: 20px">规则用语</span></td>
+            <td> <span style="font-size: 20px">必须/不可以</span></td>
+            <td><span style="font-size: 20px">操作</span></td>
+        </tr>
+        {% for d in data %}
+        <tr>
+            <td class="sentence" ><a href="{{url_for('admin.standard_simi_list')}}?word={{d.0}}">{{d.0}}</a></td>
+            <td>
+                {% if d.1==0 %}
+                不可说
+                {% endif %}
+                {% if d.1==1 %}
+                必须说用语
+                {% endif %}
+
+            </td>
+            <td><a href="{{url_for('admin.sentence_edit')}}?sentence={{d.0}}">修改规则用语</a> &nbsp;&nbsp;
+             <a id="del_sentence" href="{{url_for('admin.sentence_del')}}?sentence={{d.0}}">删除规则用语</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{url_for('admin.sentence_add')}}" class="btn btn-primary add">添加新的规则用语</a>
+{% endblock %}
+<!--content-->
+{% block script %}
+{% endblock %}

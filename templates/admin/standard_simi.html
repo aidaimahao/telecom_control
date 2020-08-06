@@ -1,0 +1,36 @@
+{% extends 'admin/base_standard.html' %}
+{% block style %}
+    <style>
+
+    </style>
+{% endblock %}
+
+<!--path-->
+{% block path %}
+<a href="{{url_for('admin.standard_sentence_list')}}">home</a> > <a href="#">相似句</a>
+{% endblock %}
+<!--path-->
+
+<!--content-->
+{% block content %}
+    <table class="table table-striped">
+        <span class="th" style="font-family: 微软雅黑;font-size: 18px"><span>{{data.sentence}}</span>><span style="font-size: 16px">相似句</span></span>
+        <br>
+        <br>
+        {% for d in data.simi_list %}
+        <tr>
+            <td class="sentence" colspan="2">
+                {%if d.0 == None%}
+                <span style="color: red">待修改</span>
+                {% else %}
+                <span>{{d.0}}</span>
+                {% endif %}
+            </td>
+            <td><a href="{{url_for('admin.simi_edit')}}?simi={{d.0}}&sentence={{data.sentence}}">修改相似句</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{url_for('admin.simi_add')}}?sentence={{data.sentence}} " class="btn btn-primary add" id="add">添加新的相似语</a>
+{% endblock %}
+<!--content-->
+

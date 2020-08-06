@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>质检标准</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='mystyle.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='base/css/bootstrap.min.css')}}">
+    <script src="{{url_for('static', filename='base/js/jquery.min.js')}}"></script>
+    {% block style %}
+        {% endblock %}
+
+    <style>
+        .head{
+            width: 100%;
+            height: 80px;
+            background-color: #0d6aad;
+            font-family: 微软雅黑;
+            font-size: 30px;
+            text-align: left;
+            line-height: 80px;
+        }
+        .path{
+            width: 100%;
+            height: 38px;
+            background-color:  deepskyblue;
+            line-height: 38px;
+            color: gainsboro;
+        }
+        .path-span{
+            display: inline-block;
+            margin-left: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="head" style="">质检标准</div>
+<div class="path">
+    <span class="path-span">
+        {% block path %}
+        {% endblock %}
+    </span>
+</div>
+
+<div class="container">
+        {% block content %}
+        {% endblock %}
+</div>
+{% block script %}
+        {% endblock %}
+</body>
+</html>

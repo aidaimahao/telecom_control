@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>服务信息</title>
+    <link rel="shortcut icon" href="{{ url_for('static',filename='base/images/logo.png')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='base/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='base/css/bootstrap-movie.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='base/css/animate.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='mystyle.css')}}">
+    <style>
+        .navbar-brand > img {
+            display: inline;
+        }
+
+    </style>
+    <style>
+        .media {
+            padding: 3px;
+            border: 1px solid #ccc
+        }
+
+    </style>
+    {% import 'UI/admin_page.html' as pg%}
+</head>
+
+<body>
+<!--导航-->
+<div class="container">
+    <!--导航-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!--小屏幕导航按钮和logo-->
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="{{ url_for('admin.msg_list',page=1) }}" class="navbar-brand" style="width:250px;">
+                    <img src="{{ url_for('static',filename='base/images/logo.png')}}" style="height:30px;">&nbsp;装维服务记录
+                </a>
+                <a class="navbar-brand" style="margin-right: 10px;color: gray; font-size: 20px"
+                   href="{{url_for('admin.check_list', page=1)}}"><span
+                        class="glyphicon glyphicon-align-justify"></span>&nbsp;注册信息</a>
+            </div>
+            <!--小屏幕导航按钮和logo-->
+            <!--导航-->
+            <div class="navbar-collapse collapse">
+                <form action="{{url_for('admin.msg_list', page=1)}}" method="get" class="navbar-form navbar-left"
+                      role="search" style="margin-top:18px;">
+                    <div class="form-group input-group">
+                        装维人员姓名：<input type="text" name="nickname"> &nbsp;&nbsp;&nbsp;&nbsp;
+                        服务时间：<input type="date" name="first_time">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <select name="info1" style="width: 100px;">
+                            <option value="2">全部</option>
+                            <option value="0">装机</option>
+                            <option value="1">修障</option>
+                        </select>&nbsp;
+                        <select name="check_to_audio" style="width: 100px;">
+                            <option value="2">全部</option>
+                            <option value="0">未质检</option>
+                            <option value="1">已质检</option>
+                        </select>
+                        宽带号码：<input type="text" name="phone">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input class="btn btn-primary" type="submit" value="搜索">
+                    </div>
+                </form>
+
+            </div>
+            <!--导航-->
+        </div>
+    </nav>
+</div>
+<!--导航-->
+<!--内容-->
+<div class="container" style="margin-top:144px">
+    <table class="table">
+        <thead>
+            <td>#</td>
+            <td>姓名</td>
+            <td>打卡时间</td>
+            <td>服务类型</td>
+            <td>宽带/固话号码</td>
+            <td>服务详情</td>
+        </thead>
+        {% for obj in page_data.items %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{ obj.1.nickname }}</td>
+                <td>{{ obj.0.time }}</td>
+                <td>{{ obj.0.info1 }}</td>
+                <td>{{ obj.0.info3 }}</td>
+                <td>
+                    <a target="_blank" href="{{url_for('admin.audio_page')}}?openid={{obj.1.openid}}&signid={{obj.0.sign_id}}">查看记录和录音 </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<!--内容-->
+<!--分页-->
+                 {{ pg.page(page_data,'admin.msg_list') }}
+<!--分页-->
+<script src="{{ url_for('static',filename='base/js/jquery.min.js')}}"></script>
+<script src="{{ url_for('static',filename='base/js/bootstrap.min.js')}}"></script>
+<script src="{{ url_for('static',filename='base/js/jquery.singlePageNav.min.js')}}"></script>
+<script src="{{ url_for('static',filename='base/js/wow.min.js')}}"></script>
+<script src="{{ url_for('static',filename='lazyload/jquery.lazyload.min.js')}}"></script>
+<script src="//cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
+
+
+
+</body>
+</html>

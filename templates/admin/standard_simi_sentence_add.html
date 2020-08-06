@@ -1,0 +1,53 @@
+{% extends 'admin/base_standard.html' %}
+{% block style %}
+    <style>
+        .th{
+            font-size: 20px;
+            font-family: 微软雅黑;
+        }
+        .sentence{
+            font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+            color: #447e9b;
+        }
+        .add{
+            display: inline-block;
+            margin-right: 50px;
+        }
+    </style>
+{% endblock %}
+
+<!--path-->
+{% block path %}
+<a href="{{url_for('admin.standard_sentence_list')}}">home</a> > <a href="{{url_for('admin.standard_simi_list')}}?word={{data.sentence}}">相似句 </a> > <a href="#">相似句添加</a>
+{% endblock %}
+<!--path-->
+
+<!--content-->
+{% block content %}
+    <span style="font-family: 微软雅黑; font-size: 18px">添加相似句</span>
+    <br>
+    <br>
+
+    <input type="text" style="display: none;" id="sentence" value="{{data.sentence}}">
+<p><span style="font-family: 微软雅黑;font-size: 16px">{{data.sentence}}</span> &nbsp;> &nbsp;<span>相似句:&nbsp;&nbsp;&nbsp;&nbsp;</span><input class="form-control" type="text" id="simi"></p>
+
+    <p><button id="add" class="btn btn-primary">添加</button></p>
+{% endblock %}
+<!--content-->
+{% block script %}
+<script>
+    $('#add').click(function () {
+        var url = "{{url_for('admin.simi_add')}}";
+        var simi = $('#simi').val();
+        var sentence = $('#sentence').val();
+        $.ajax({
+            url: url,
+            data:{'simi': simi, 'sentence': sentence},
+            type: "POST",
+            success:function (data) {
+                alert(data['msg']);
+            }
+        })
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,352 @@
+
+.popup {
+    padding: 24px;
+    overflow: hidden;
+}
+.title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 1;
+    color: #333333;
+    margin-top: 24px;
+}
+.audio {
+    margin-top: 24px;
+    height: 40px;
+    text-align: center;
+}
+.audio audio {
+    width: 480px;
+    height: 40px;
+}
+.btnbox {
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+.textinfobox {
+    width: 600px;
+    height: 264px;
+    overflow: hidden;
+    margin: 24px 24px 0;
+}
+.textinfoTitle {
+    display: flex;
+    padding: 0 24px;
+}
+.textinfoTitle span {
+    flex: 1;
+    font-size: 14px;
+    color: #333333;
+    font-weight: bold;
+}
+.textinfoTitle span:last-child {
+    text-align: right
+}
+.textinfo {
+    height: 244px;
+    padding: 0 24px;
+    overflow: auto;
+}
+.textinfobox p:nth-child(1) {
+    margin-top: 0;
+}
+.robot {
+    margin-top: 12px;
+}
+.robot + .robot {
+    margin-top: 0;
+}
+.robot span {
+    display: inline-block;
+    max-width: 50%;
+    color: #666666;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+}
+.robot span.active {
+    color: green;
+}
+.user {
+    margin-top: 12px;
+    text-align: right;
+}
+.user + .user {
+    margin-top: 0;
+}
+.user span {
+    display: inline-block;
+    max-width: 50%;
+    color: #666666;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+}
+.user span.active {
+    color: green;
+}
+.nodelist {
+    margin-top: 24px;
+    margin-left: 24px;
+    width: 640px;
+    position: relative;
+}
+.nodelist span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80px;
+    color: #666666;
+    font-size: 12px;
+    font-weight: 400;
+}
+.nodelist .nodelistbtn {
+    width: 560px;
+    height: 74px;
+    padding-left: 80px;
+    overflow: hidden;
+}
+.nodelist .nodelistbtn div {
+    height: 100%;
+    overflow: auto;
+}
+.nodelist .nodelistbtn div button {
+    margin-right: 12px;
+    margin-bottom: 12px;
+}
+.yitubox {
+    position: absolute;
+    height: 600px;
+    width: 600px;
+    right: -400px;
+    top: 50%;
+    margin-top: -300px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    filter: drop-shadow(0px 3px 24px rgba(152, 152, 152, 0.16));
+}
+.alphbox {
+    position: relative;
+    height: 100%;
+    filter: drop-shadow(0px 3px 24px rgba(152, 152, 152, 0.16));
+}
+.alph {
+    position: absolute;
+    font-size: 48px;
+    font-weight: bold;
+    text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    cursor: pointer;
+}
+.alphbox .active {
+    color: #55d1ff;
+    transform: scale(1.5);
+    transition: all .5s;
+}
+.alph1 {
+    left: 140px;
+    top: 55px;
+}
+.alph2 {
+    left: 95px;
+    top: 110px;
+}
+.alph3 {
+    left: 50px;
+    top: 160px;
+}
+.alph4 {
+    left: 30px;
+    top: 220px;
+}
+.alph5 {
+    left: 25px;
+    top: 280px;
+}
+.alph6 {
+    left: 50px;
+    top: 340px;
+}
+.alph7 {
+    left: 70px;
+    top: 395px;
+}
+.alph8 {
+    left: 115px;
+    top: 450px;
+}
+.alph9 {
+    left: 170px;
+    top: 490px;
+}
+.yitu {
+    position: absolute;
+    height: 400px;
+    width: 400px;
+    right: -300px;
+    top: 50%;
+    margin-top: -200px;
+    background-color: #eeeeee;
+    border-radius: 50%;
+}
+.note {
+    position: absolute;
+    left: 50px;
+    font-size: 14px;
+    color: #333333;
+}
+.note1 {
+    top: 120px;
+}
+.note2 {
+    top: 145px;
+}
+.note3 {
+    top: 170px;
+}
+.note4 {
+    top: 195px;
+}
+.note5 {
+    top: 220px;
+}
+.note6 {
+    top: 245px;
+}
+.btnbox button{
+    margin-left: 12px;
+}
+.join {
+    position: absolute;
+    left: 48px;
+    bottom: 30px;
+    color: #55d1ff;
+    font-size: 12px;
+    cursor: pointer;
+}
+.rate {
+    margin-left: 170px;
+}
+.rate span {
+    color: #333333;
+    font-size: 12px;
+    font-weight: 400;
+}
+.intention {
+    position: absolute;
+    left: 130px;
+    bottom: 28px;
+}
+.intention label {
+    color: #55d1ff;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 6px;
+}
+.remarks {
+    margin-top: 12px;
+    margin-left: 24px;
+    width: 640px;
+}
+.remarks span {
+    color: #666666;
+    font-size: 12px;
+    font-weight: 400;
+}
+.remarks input {
+    color: #666666;
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 36px;
+    width: 512px;
+}
+.textinfobox1 {
+    width: 600px;
+    height: 264px;
+    overflow: hidden;
+    margin: 24px 24px 0;
+}
+.textinfobox1 .call_id {
+    margin-left: 24px;
+    font-size: 14px;
+    color: red;
+    font-weight: bold;
+}
+.textinfoTitle1 {
+    display: flex;
+    padding: 0 0 0 24px;
+}
+.textinfoTitle1 span {
+    font-size: 14px;
+    color: #333333;
+    font-weight: bold;
+}
+.textinfoTitle1 span:nth-child(1) {
+    flex: 2;
+}
+.textinfoTitle1 span:nth-child(2) {
+    flex: 2;
+}
+.textinfoTitle1 span:nth-child(3) {
+    flex: 1;
+}
+.textinfoTitle1 span:nth-child(4) {
+    flex: 4;
+}
+.textinfo1 {
+    height: 224px;
+    padding: 0 0 0 24px;
+    overflow: auto;
+}
+.textinfo1 p {
+    display: flex;
+    height: 30px;
+    line-height: 30px;
+}
+.textinfo1 p:nth-child(odd) {
+    background-color: #f7f7f7;
+}
+.textinfo1 p span {
+    font-size: 12px;
+    color: #666666;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.textinfo1 p span:nth-child(1) {
+    flex: 2;
+}
+.textinfo1 p span:nth-child(2) {
+    flex: 2;
+}
+.textinfo1 p span:nth-child(3) {
+    flex: 1;
+}
+.textinfo1 p span:nth-child(4) {
+    flex: 4;
+}
+.changeVersion {
+    position: absolute;
+    left: 24px;
+    top: 24px;
+    color: #55d1ff;
+    font-size: 14px;
+}
+.changeVersion:hover {
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.star {
+    position: absolute;
+    left: 210px;
+    bottom: 27px;
+    cursor: pointer;
+}
+.activeStar {
+    color: yellow;
+}

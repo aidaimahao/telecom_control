@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>注册信息</title>
+    <link rel="shortcut icon" href="{{ url_for('static',filename='base/images/logo.png')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='base/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='base/css/bootstrap-movie.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='base/css/animate.css')}}">
+    {% import 'UI/admin_page.html' as pg%}
+    <style>
+        .navbar-brand>img {
+            display: inline;
+        }
+
+    </style>
+    <style>
+        .media{
+            padding:3px;
+            border:1px solid #ccc
+        }
+
+    </style>
+</head>
+
+<body>
+<!--导航-->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!--小屏幕导航按钮和logo-->
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="{{ url_for('admin.check_list',page=1) }}" class="navbar-brand" style="width:250px;">
+                <img src="{{ url_for('static',filename='base/images/logo.png')}}" style="height:30px;">&nbsp;注册信息
+            </a>
+        </div>
+        <!--小屏幕导航按钮和logo-->
+        <!--导航-->
+        <div class="navbar-collapse collapse">
+            <form action="{{url_for('admin.check_list', page=1)}}" method="get" class="navbar-form navbar-left" role="search" style="margin-top:18px;">
+                <div class="form-group input-group">
+                        姓名：<input type="text" name="nickname"> &nbsp;&nbsp;&nbsp;&nbsp;
+                        未审核：<input type="checkbox" name="state" value="null"> &nbsp;&nbsp;
+                        未通过：<input type="checkbox" name="state" value="0">&nbsp;&nbsp;
+                        已通过：<input type="checkbox" name="state" value="1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input class="btn btn-primary" type="submit" value="搜索">
+                </div>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="curlink" href="{{url_for('admin.msg_list', page=1)}}"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;服务记录</a>
+                </li>
+
+            </ul>
+        </div>
+        <!--导航-->
+
+    </div>
+</nav>
+<!--导航-->
+<!--内容-->
+<div class="container" style="margin-top:106px">
+     {% for item in page_data.items %}
+            {% if item.nickname != None %}
+            <div style="border: red solid 1px">
+                <div></div>
+                <div>
+                </div>
+                <div>
+                </div>
+
+                <div>
+                    <table class="table table-bordered" border="0"  cellpadding="0" cellspacing="0"style="">
+                        <tr><img style="width: 100px;height: 100px;" src="" alt=""></tr>
+                        <tr><td>装维人员姓名：{{ item.nickname }}</td></tr>
+                        <tr><td>审核状态：
+                    {% if item.face_pass == 1 %}
+                        <span style="color: green">已通过</span>
+                    {% elif item.face_pass == 0%}
+                        <span style="color: red;">未通过</span>
+                    {% else %}
+                        <span style="color: darkgray;">未审核</span>
+                    {% endif %}</td></tr>
+                        <tr><td>角色：
+                    {% if item.is_admin == 1%}
+                        管理员
+                    {% elif item.is_admin == 0 %}
+                        装维人员
+                    {% endif %}</td></tr>
+                        <tr><td>装维人员工号：{{ item.phone_number }}</td></tr>
+                        <tr><td>员工编号：{{ item.job_number }}</td></tr>
+                        <tr><td>注册时间：{{ item.first_time }}</td></tr>
+                        <tr><td>人脸拍照：
+                            <img style="width: 100px; height: 100px; margin-left: 20px;'" src="{{item.face_image|replace('/opt/web/telecom_field_control', 'https://cnzhile.com/tfc')}}" onerror="this.src='/static/admin/img/nohead.jpg'" alt="">
+                            </td>
+                        </tr>
+                        <tr>
+                            {% if item.face_pass == 1 or item.face_pass == 0 %}
+                                <td>注册审核结果： <span><a disabled class="btn btn-primary" href="{{url_for('admin.pass_or_fail')}}?openid={{item.openid}}&mark=1">通过</a></span>
+                                    <span style="font-size: 18px;">|</span> &nbsp;&nbsp;<form style="display: inline" action="{{url_for('admin.pass_or_fail')}}" method="get">
+                                        <input type="text" name="openid" style="display: none" value="{{item.openid}}">
+                                        <input type="text" name="mark" style="display: none" value="0">
+                                        {% if item.nopass_reason and '名字不符' in item.nopass_reason %}
+                                            名字不符：<input type="checkbox" name="reason" value="名字不符" checked> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {% else %}
+                                            名字不符：<input type="checkbox" name="reason" value="名字不符"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {% endif %}
+                                        {% if item.nopass_reason and '电话不符' in item.nopass_reason %}
+                                            电话不符：<input type="checkbox" name="reason" value="电话不符" checked> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {% else %}
+                                            电话不符：<input type="checkbox" name="reason" value="电话不符"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {% endif %}
+                                        {% if item.nopass_reason and '工号不符' in item.nopass_reason %}
+                                            工号不符：<input type="checkbox" name="reason" value="工号不符" checked> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {% else %}
+                                            工号不符：<input type="checkbox" name="reason" value="工号不符"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {% endif %}
+                                        {% if item.nopass_reason and '照片不符' in item.nopass_reason %}
+                                            照片不符：<input type="checkbox" name="reason" value="照片不符" checked> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {% else %}
+                                            照片不符：<input type="checkbox" name="reason" value="照片不符"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {% endif %}
+                                                <input type="submit" class="btn btn-danger" disabled value="不通过">
+                                    </form>
+                                </td>
+                            {% else %}
+                                <td> 注册审核结果：<span><a class="btn btn-primary" href="{{url_for('admin.pass_or_fail')}}?openid={{item.openid}}&mark=1">通过</a></span>
+                                    <span style="font-size: 18px;">|</span> &nbsp;&nbsp;<form style="display: inline" action="{{url_for('admin.pass_or_fail')}}" method="get">
+                                        <input type="text" name="openid" style="display: none" value="{{item.openid}}">
+                                        <input type="text" name="mark" style="display: none" value="0">
+                                            名字不符：<input type="checkbox" name="reason" value="名字不符"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            电话不符：<input type="checkbox" name="reason" value="电话不符"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            工号不符：<input type="checkbox" name="reason" value="工号不符"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            照片不符：<input type="checkbox" name="reason" value="照片不符"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input type="submit" class="btn btn-danger" value="不通过">
+                                    </form>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+            <br><br>
+            {% endif %}
+        {% endfor %}
+
+        {{ pg.page(page_data,'admin.check_list') }}
+</div>
+<!--内容-->
+<!--底部-->
+
+<!--底部-->
+<script src="{{ url_for('static',filename='base/js/jquery.min.js')}}"></script>
+<script src="{{ url_for('static',filename='base/js/bootstrap.min.js')}}"></script>
+<script src="{{ url_for('static',filename='base/js/jquery.singlePageNav.min.js')}}"></script>
+<script src="{{ url_for('static',filename='base/js/wow.min.js')}}"></script>
+<script src="{{ url_for('static',filename='lazyload/jquery.lazyload.min.js')}}"></script>
+<script src="//cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
+<script>
+    $(function() {
+        new WOW().init();
+    })
+
+</script>
+
+{% block js %} {% endblock %}
+</body>
+</html>

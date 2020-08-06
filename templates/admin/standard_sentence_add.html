@@ -1,0 +1,41 @@
+{% extends 'admin/base_standard.html' %}
+{% block style %}
+    <style>
+
+    </style>
+{% endblock %}
+
+<!--path-->
+{% block path %}
+<a href="{{url_for('admin.standard_sentence_list')}}">home</a> > <a href="#">添加</a>
+{% endblock %}
+<!--path-->
+
+<!--content-->
+{% block content %}
+     <span style="font-family: 微软雅黑; font-size: 22px;">添加sentence</span>
+        <br>
+        <br>
+    <p><span style="font-family: 微软雅黑;font-size: 18px;">规则用语: </span>&nbsp; &nbsp;<input class="form-control" type="text" id="sentence"></p>
+    <p><span style="font-family: 微软雅黑;font-size: 18px;">是否可说:</span>&nbsp; &nbsp; <span>必须用语：</span><input type="radio" name="nes" value="1">&nbsp;&nbsp;&nbsp;&nbsp;<span>不可说用语：</span><input type="radio" name="nes" value="0"></p>
+
+    <p><button id="add" class="btn btn-primary">添加</button></p>
+{% endblock %}
+<!--content-->
+{% block script %}
+<script>
+    $('#add').click(function () {
+        var url = "{{url_for('admin.sentence_add')}}";
+        var nes = $('input[name="nes"]:checked').val();
+        var sentence = $('#sentence').val();
+        $.ajax({
+            url: url,
+            data:{"nes": nes, 'sentence': sentence},
+            type: "POST",
+            success:function (data) {
+                alert(data['msg']);
+            }
+        })
+    })
+</script>
+{% endblock %}

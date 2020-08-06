@@ -1,0 +1,27 @@
+{% extends 'admin/base_standard.html' %}
+{% block style %}
+    <style>
+
+    </style>
+{% endblock %}
+
+<!--path-->
+{% block path %}
+<a href="{{url_for('admin.standard_sentence_list')}}">home</a> > <a href="{{url_for('admin.standard_simi_list')}}?refer={{data.0.0}}">相似句</a> > <a href="#">关键词</a>
+{% endblock %}
+<!--path-->
+
+<!--content-->
+{% block content %}
+    <table class="table table-striped">
+        <span class="th">关键字</span>
+        {% for d in data %}
+        <tr>
+            <td class="sentence" colspan="2">{{d.0}}</td>
+            <td>修改</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="" class="btn btn-default add">添加</a>
+{% endblock %}
+<!--content-->

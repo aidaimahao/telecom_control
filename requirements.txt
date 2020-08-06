@@ -1,0 +1,3 @@
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple flask
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple flask_sqlalchemy
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple sqlalchemy
